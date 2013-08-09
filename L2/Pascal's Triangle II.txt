@@ -1,0 +1,23 @@
+public class Solution {
+    public ArrayList<Integer> getRow(int rowIndex) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int[] ret=new int[rowIndex+1];
+        ret[0]=1;
+        if(rowIndex==0) return getList(ret);
+        for(int j=1;j<=rowIndex;j++){
+            for(int i=j-1;i>0;i--){
+                ret[i]=ret[i]+ret[i-1];
+            }
+            ret[j]=1;
+        }
+        return getList(ret);
+    }
+    
+    ArrayList<Integer> getList(int[] ret){
+        ArrayList<Integer> res=new ArrayList<Integer>();
+        for(int i=0;i<ret.length;i++)
+        res.add(ret[i]);
+        return res;
+    }
+}

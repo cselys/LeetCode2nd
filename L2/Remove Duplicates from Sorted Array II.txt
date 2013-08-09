@@ -1,0 +1,20 @@
+public class Solution {
+    public int removeDuplicates(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int iL=A.length;
+        if(A==null || iL<=2) return iL;
+        int i=0;
+        boolean bflag=false;
+        for(int j=1;j<iL;j++){
+            if(A[i]!=A[j]){bflag=false;A[++i]=A[j];}
+            else if(!bflag){
+                //if(j<2 ||A[j-1]!=A[j])i++;
+                bflag=true;
+                A[++i]=A[j];                
+            }
+            
+        }
+ return i+1;       
+    }
+}

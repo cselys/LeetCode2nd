@@ -1,0 +1,31 @@
+public boolean isWildcardMatch(String s, String p) {
+int sPos, pPos, sIndex, pIndex;
+boolean star = false;
+sIndex = pIndex = sPos = pPos = 0;
+while (sIndex < s.length() && pIndex <= p.length()) {
+if (pIndex < p.length() && p.charAt(pIndex) == '*') {
+sPos = sIndex;
+while (pIndex < p.length() && p.charAt(pIndex) == '*') {
+pIndex++;
+}
+if (pIndex == p.length())
+return true;
+pPos = pIndex;
+star = true;
+} else if (pIndex < p.length()
+&& (p.charAt(pIndex) == '?' || p.charAt(pIndex) == s
+.charAt(sIndex))) {
+pIndex++;
+sIndex++;
+} else {
+if (!star)
+return false;
+sPos++;
+sIndex = sPos;
+pIndex = pPos;
+}
+}
+while (pIndex < p.length() && p.charAt(pIndex) == '*')
+pIndex++;
+return sIndex == s.length() && pIndex == p.length();
+}

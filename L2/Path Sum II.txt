@@ -1,0 +1,68 @@
+
+ * }
+ */
+public class Solution {
+    public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> result=new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> tmp= new ArrayList<Integer>();
+        GetResult(root,sum,result, tmp);
+        return result;
+        
+    }
+    
+   void GetResult(TreeNode root, int sum, ArrayList<ArrayList<Integer>> ret, ArrayList<Integer> tmp){
+        if(root==null) return;
+        
+        tmp.add(root.val);
+        
+        int leftS=sum-root.val;
+        
+        if(leftS==0 && root.left==null && root.right==null)
+        {
+            ret.add(tmp);
+            return;
+        }
+        
+        GetResult(root.left, leftS, ret,new ArrayList<Integer>(tmp) );
+        GetResult(root.right, leftS, ret, new ArrayList<Integer>(tmp) );
+        
+        //tmp.remove(tmp.size()-1);
+    
+    }
+    
+}
+
+----------------------------
+DP:
+
+public class Solution {
+    public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        if(root==null) return res;
+        int path[] = new int[height(root)];
+        dfs(res, path, root, sum,0);
+        return res;
+        
+    }
+    public void dfs(ArrayList<ArrayList<Integer>> res, int[] path, TreeNode node, int sum,int index){
+        if(node==null) return;
+        path[index]=node.val;
+        if(node.left == null && node.right == null && sum==node.val){
+            ArrayList<Integer> subset= new ArrayList<Integer>();
+            for(int i =0;i<=index;i++){
+                subset.add(path[i]);
+            }
+            res.add(subset);
+        }
+        dfs(res, path,node.left, sum - node.val, index+1);
+        dfs(res, path, node.right, sum - node.val, index+1);
+    }
+    public int height(TreeNode node){
+        if(node==null) return 0;
+        return Math.max(height(node.left), height(node.right))+1;
+    }
+}

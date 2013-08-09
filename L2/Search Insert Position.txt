@@ -1,0 +1,19 @@
+public class Solution {
+    public int searchInsert(int[] A, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A==null || A.length==0) return 0;
+    //    if(target<A[0]) return 0;
+      //  if(target>A[A.length-1]) return A.length;
+        
+        return getL(A,target, 0, A.length-1);        
+    }
+    
+    int getL(int[] A, int target,int start, int end){
+    
+    int mid=(start+end)/2;
+    if(target==A[mid]) return mid;
+    else if(target<A[mid]) return start<mid?getL(A,target,start,mid-1):start;
+    else return mid<end?getL(A,target, mid+1, end):end+1;
+    }
+}

@@ -1,0 +1,36 @@
+public class Solution {
+    public String addBinary(String a, String b) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int iaL=a.length()-1, ibL=b.length()-1;
+        int ia=0,ib=0, carr=0;
+        StringBuffer sb=new StringBuffer();
+        
+        while(iaL>=0 && ibL>=0){
+            ia=a.charAt(iaL--)=='0'?0:1;
+            ib=b.charAt(ibL--)=='0'?0:1;
+            
+            int t=ia+ib+carr;
+            sb.append(t%2==0?'0':'1');
+            carr=t>>1;            
+        }
+        
+        if(iaL>=0){
+            while(iaL>=0){
+                ia=a.charAt(iaL--)=='0'?0:1;
+                int t=ia+carr;
+                sb.append(t%2==0?'0':'1');
+                carr=t>>1;
+            }
+        }else if(ibL>=0){
+            while(ibL>=0){
+                ib=b.charAt(ibL--)=='0'?0:1;
+                int t=ib+carr;
+                sb.append(t%2==0?'0':'1');
+                carr=t>>1;
+            }
+        }
+        if(carr==1) sb.append('1');
+        return sb.reverse().toString();
+    }
+}

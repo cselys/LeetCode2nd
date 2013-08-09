@@ -1,0 +1,13 @@
+public class Solution {
+    public int removeDuplicates(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A.length<2) return A.length;
+        int j=0;
+        for(int i=1;i<A.length;i++){
+            if(A[j]!=A[i])
+            A[++j]=A[i];
+        }
+        return j+1;
+    }
+}

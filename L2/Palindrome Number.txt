@@ -1,0 +1,22 @@
+public class Solution {
+    public boolean isPalindrome(int x) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(x<0) return false;
+        int factor=1;
+        
+        while(x/factor>=10) factor*=10;
+        
+        while(x>0){
+        int f=x/factor;
+        int e=x%10;
+        
+        if(f!=e) return false;
+        x=(x%factor)/10; 
+        factor/=100;        
+        
+        }
+        return true;
+        
+    }
+}

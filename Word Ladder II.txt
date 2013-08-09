@@ -1,0 +1,76 @@
+public class Solution {
+   public ArrayList<ArrayList<String>> findLadders(String start, String end,
+            HashSet<String> dict) {
+
+        HashSet<String> visited = new HashSet<String>();
+        LinkedList<String> queue = new LinkedList<String>();
+        HashMap<String, LinkedList<String>> backtrace = new HashMap<String, LinkedList<String>>();
+        queue.offer(start);
+        StringBuffer sb = new StringBuffer();
+
+        while (!queue.isEmpty()) {
+            for (int i = 0; i < queue.size(); i++) {
+                visited.add(queue.get(i));
+            }
+
+            for (int length = queue.size(); length >= 1; length--) {
+                String word = queue.poll();
+                sb.append(word);
+                for (int i = 0; i < start.length(); i++) {
+                    char currChar = word.charAt(i);
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        if (c != currChar) {
+                            sb.setCharAt(i, c);
+                            String newWord = sb.toString();
+                            if (!visited.contains(newWord)
+                                    && dict.contains(newWord)) {
+                                queue.offer(newWord);
+                                updateBacktrace(backtrace, newWord, word);
+                            }
+                        }
+                        sb.setCharAt(i, currChar);
+                    }
+                }
+                sb.setLength(0);
+            }
+            if (backtrace.containsKey(end)) {
+                break;
+            }
+        }
+
+        ArrayList<ArrayList<String>> paths = new ArrayList<ArrayList<String>>();
+        if (backtrace.containsKey(end))
+            buildPath(end, backtrace, paths, new LinkedList<String>());
+
+        return paths;
+    }
+
+    // DFS
+    private void buildPath(String word,
+            HashMap<String, LinkedList<String>> backtrace,
+            ArrayList<ArrayList<String>> paths, LinkedList<String> buffer) {
+
+        buffer.addFirst(word);
+        if (backtrace.get(word) == null) {
+            paths.add(new ArrayList<String>(buffer));
+        } else {
+            LinkedList<String> list = backtrace.get(word);
+            for (String str : list) {
+                buildPath(str, backtrace, paths, buffer);
+            }
+        }
+        buffer.removeFirst();
+    }
+
+    private void updateBacktrace(HashMap<String, LinkedList<String>> backtrace,
+            String word, String preWord) {
+        if (backtrace.containsKey(word)) {
+             if (!backtrace.get(word).contains(preWord))
+                backtrace.get(word).add(preWord);
+        } else {
+            LinkedList<String> list = new LinkedList<String>();
+            list.add(preWord);
+            backtrace.put(word, list);
+        }
+    }
+}
