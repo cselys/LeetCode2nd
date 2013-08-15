@@ -1,0 +1,147 @@
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        if(p == "")	return s == "";
+    	
+    	ArrayList<String> splits = splitString(p);
+    	if(splits.size() == 0)	return true;
+    	String start = splits.get(0);
+    	if('*' != p.charAt(0))
+    	{
+    		if(s.length() < start.length())	return false;
+    		for(int i = 0; i < start.length(); ++i)
+    			if(p.charAt(i) != s.charAt(i) && '?' != p.charAt(i))
+    				return false;
+    		splits.remove(0);
+    		s = s.substring(start.length());
+    	}
+    	if(!p.endsWith("*"))
+    	{
+    		if(splits.size() == 0)	
+    			return s.equals("");
+    		String end = splits.get(splits.size() - 1);
+    		if(s.length() < end.length())	return false;
+    		for(int i = 0; i < end.length(); ++i)
+    			if(s.charAt(s.length() - 1 - i) != p.charAt(p.length() - 1 - i) && '?' != p.charAt(p.length() - 1 - i))
+    				return false;
+    		splits.remove(splits.size() - 1);
+    		s = s.substring(0, s.length() - end.length());
+    	}
+    	int idx = 0;
+    	for(int i = 0; i < splits.size(); ++i)
+    	{
+    		String part = splits.get(i);
+    		while(idx <= s.length() - part.length())
+    		{
+    			boolean flag = true;
+    			for(int x = 0; x < part.length(); ++x)
+    			{
+    				if(part.charAt(x) != s.charAt(idx + x) && '?' != part.charAt(x))
+    				{
+    					flag = false;
+    					break;
+    				}
+    			}
+    			if(flag)
+    				break;
+    			else
+    				++idx;
+    		}
+    		if(idx < 0)	return false;
+    		idx += splits.get(i).length();
+    		if(idx > s.length())	return false;
+    	}
+    	return true;
+    }
+    
+    ArrayList<String> splitString(String pattern)
+    {
+    	ArrayList<String> ret = new ArrayList<String>();
+    	int left = -1, right = -1;
+    	while(right < pattern.length())
+    	{
+    		while(++left < pattern.length() && '*' == pattern.charAt(left));
+        	right = left;
+        	while(++right < pattern.length() && '*' != pattern.charAt(right));
+        	if(left < pattern.length() && right <= pattern.length() && right > left)
+        		ret.add(pattern.substring(left, right));
+        	left = right;
+    	}
+    	
+    	return ret;
+    }
+}
+
+
+
+    public class Solution {  
+        public boolean isMatch(String s, String p) {  
+            if(p == "") return s == "";  
+              
+            ArrayList<String> splits = splitString(p);  
+            if(splits.size() == 0)  return true;  
+            String start = splits.get(0);  
+            if('*' != p.charAt(0))  
+            {  
+                if(s.length() < start.length())  return false;  
+                for(int i = 0; i < start.length(); ++i)  
+                    if(p.charAt(i) != s.charAt(i) && '?' != p.charAt(i))  
+                        return false;  
+                splits.remove(0);  
+                s = s.substring(start.length());  
+            }  
+            if(!p.endsWith("*"))  
+            {  
+                if(splits.size() == 0)    
+                    return s.equals("");  
+                String end = splits.get(splits.size() - 1);  
+                if(s.length() < end.length())    return false;  
+                for(int i = 0; i < end.length(); ++i)  
+                    if(s.charAt(s.length() - 1 - i) != p.charAt(p.length() - 1 - i) && '?' != p.charAt(p.length() - 1 - i))  
+                        return false;  
+                splits.remove(splits.size() - 1);  
+                s = s.substring(0, s.length() - end.length());  
+            }  
+            int idx = 0;  
+            for(int i = 0; i < splits.size(); ++i)  
+            {  
+                String part = splits.get(i);  
+                while(idx <= s.length() - part.length())  
+                {  
+                    boolean flag = true;  
+                    for(int x = 0; x < part.length(); ++x)  
+                    {  
+                        if(part.charAt(x) != s.charAt(idx + x) && '?' != part.charAt(x))  
+                        {  
+                            flag = false;  
+                            break;  
+                        }  
+                    }  
+                    if(flag)  
+                        break;  
+                    else  
+                        ++idx;  
+                }  
+                if(idx < 0)  return false;  
+                idx += splits.get(i).length();  
+                if(idx > s.length()) return false;  
+            }  
+            return true;  
+        }  
+          
+        ArrayList<String> splitString(String pattern)  
+        {  
+            ArrayList<String> ret = new ArrayList<String>();  
+            int left = -1, right = -1;  
+            while(right < pattern.length())  
+            {  
+                while(++left < pattern.length() && '*' == pattern.charAt(left));  
+                right = left;  
+                while(++right < pattern.length() && '*' != pattern.charAt(right));  
+                if(left < pattern.length() && right <= pattern.length() && right > left)  
+                    ret.add(pattern.substring(left, right));  
+                left = right;  
+            }  
+              
+            return ret;  
+        }  
+    }  

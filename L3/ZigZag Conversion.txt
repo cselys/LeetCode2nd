@@ -1,0 +1,32 @@
+public class Solution {
+    public String convert(String s, int nRows) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(s==null) return null;
+        if(nRows<=1)return s;
+        int sz=s.length();
+        
+        int pattern=2*nRows-2;
+        StringBuilder ret=new StringBuilder();
+        
+        for(int i=0;i<sz;i+=pattern)
+        ret.append(s.charAt(i));
+        
+        for(int i=1;i<nRows-1;i++){
+            for(int j=i;j<sz;j+=pattern){
+                
+                ret.append(s.charAt(j));
+                int k=j+pattern-2*i;
+                if(k<sz) ret.append(s.charAt(k));
+            }
+            
+        }
+        
+        for(int i=nRows-1;i<sz;i+=pattern)
+        ret.append(s.charAt(i));
+        return ret.toString();
+    }
+}
+
+        
+        
