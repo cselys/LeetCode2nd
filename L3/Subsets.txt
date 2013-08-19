@@ -1,0 +1,44 @@
+
+public class Solution {
+    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+        Arrays.sort(S);
+     ArrayList<ArrayList<Integer>> subsets = new ArrayList<ArrayList<Integer>>();
+subsets.add(new ArrayList<Integer>());
+for (int i = 0; i < S.length; i++) {
+int size = subsets.size();
+for (int j = 0; j < size; j++) {
+ArrayList<Integer> subset = new ArrayList<Integer>(subsets.get(j));
+subset.add(S[i]);
+subsets.add(subset);
+}
+}
+return subsets;
+    }
+}
+
+
+http://discuss.leetcode.com/questions/253/subsets
+
+public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+    ArrayList<ArrayList<Integer>> cache = new ArrayList<ArrayList<Integer>>();
+    if (S == null || S.length == 0) {
+        return cache;
+    }
+    cache.add(new ArrayList<Integer>());
+    Arrays.sort(S);
+    return helper(S, 0, cache);
+}
+
+private ArrayList<ArrayList<Integer>> helper(int[] s, int index, ArrayList<ArrayList<Integer>> cache) {
+    if (index == s.length) return cache;
+
+    ArrayList<ArrayList<Integer>> newCache = new ArrayList<ArrayList<Integer>>(cache);
+    for (ArrayList<Integer> set : cache) {
+        ArrayList<Integer> temp = new ArrayList<Integer>(set);
+        temp.add(s[index]);
+        newCache.add(temp);
+    }
+
+    return helper(s, index + 1, newCache);
+}
+

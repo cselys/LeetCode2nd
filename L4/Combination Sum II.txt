@@ -1,0 +1,28 @@
+    public class Solution {  
+        public ArrayList<ArrayList<Integer>> combinationSum2(int[] a, int target) {  
+            // Start typing your Java solution below  
+            // DO NOT write main() function  
+            ArrayList<ArrayList<Integer>> res=new ArrayList<ArrayList<Integer>>();  
+            ArrayList<Integer> l=new ArrayList<Integer>();  
+            Arrays.sort(a);  
+            solve(a,target,0,0,l,res);  
+            return res;  
+        }  
+        public void solve(int[] a, int target, int sum, int i, ArrayList<Integer> l, ArrayList<ArrayList<Integer>> res){  
+            if(sum==target){ res.add(l); return;}  
+            if(sum>target||i>=a.length) return;  
+            int n=0;  
+            int j=i;  
+            while(j<a.length&&a[j]==a[i]) j++;//diff  
+            while(n<=j-i){//diff  
+                solve(a,target,sum+n*a[i],j,l,res);//diff  
+                ArrayList<Integer> tmp=new ArrayList<Integer>(l);  
+                l=tmp;  
+                l.add(a[i]);  
+                n++;  
+                  
+            }  
+            return;  
+        }  
+          
+    }  
