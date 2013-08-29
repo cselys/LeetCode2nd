@@ -1,0 +1,43 @@
+public class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        if (n == 0) return;
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int t = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = t;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                int t = matrix[i][j];
+                matrix[i][j] = matrix[i][n - j - 1];
+                matrix[i][n - j - 1] = t;
+            }
+        }
+    }
+}
+
+
+---------------
+
+public class Solution {
+    public void rotate(int[][] matrix) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int iL=matrix.length-1;
+        if(iL<1) return;
+        
+        for(int i=0;i<=iL/2;i++){
+            for(int j=i;j<iL-i;j++){
+                int temp=matrix[i][j];
+                matrix[i][j]=matrix[iL-j][i];
+                matrix[iL-j][i]=matrix[iL-i][iL-j];
+                matrix[iL-i][iL-j]=matrix[j][iL-i];
+                matrix[j][iL-i]=temp;
+            }
+        }
+        
+    }
+}

@@ -1,0 +1,85 @@
+public class Solution {
+    public ArrayList<Integer> inorderTraversal(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<Integer> result = new ArrayList<Integer>();
+         if(root == null){
+             return result;
+         }
+         
+         if(root.left != null){
+             result.addAll(inorderTraversal(root.left));
+         }
+         result.add(root.val);
+         if(root.right != null){
+             result.addAll(inorderTraversal(root.right));
+         }
+         return result; 
+    }
+}
+
+
+
+-----------------
+ Time:O(n) and space O(logn). 
+
+
+public class Solution {
+    public ArrayList<Integer> inorderTraversal(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<Integer> res = new ArrayList<Integer>();
+            if(root==null) return res;
+            
+            Stack<TreeNode> s = new Stack<TreeNode>();
+            
+            TreeNode cur=root;
+            while(!s.isEmpty() || cur!=null){
+                if(cur!=null){
+                    s.push(cur);
+                    cur=cur.left;
+                }else{
+                    cur=s.pop();
+                    res.add(cur.val);
+                    cur=cur.right;
+                }
+            }
+            return res;
+    }
+}
+
+
+----------------------
+ Morris algorithm. Time: O(nlogn) but space O(1). 
+
+public class Solution {
+    public ArrayList<Integer> inorderTraversal(TreeNode root) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        TreeNode cur=root,next=null;
+        while(cur!=null){
+            if(cur.left!=null){
+                next=cur;
+                cur=cur.left;
+            
+                TreeNode temp=cur;
+                while(temp.right!=null && temp.right!=next){
+                    temp=temp.right;
+                }    
+            
+                if(temp.right==null){
+                    temp.right=next;
+                }else{
+                    temp.right=null;
+                    res.add(next.val);
+                    cur=next.right;
+                }
+            }else{
+                res.add(cur.val);
+                cur=cur.right;
+            }
+        }
+        return res;
+    }
+}

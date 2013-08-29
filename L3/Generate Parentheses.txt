@@ -26,3 +26,66 @@ void generate(ArrayList<String> ret, String s, int l,int r,int n){
         return st.toString();
     }
 }
+
+
+--------------------------
+//generate parentheses
+public class Solution {
+    public ArrayList<String> generateParenthesis(int n) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        ArrayList<String> result = new ArrayList<String>();
+        
+        char[] str = new char[n*2];
+        
+        generateParenthesisHelp(n, n, str, 0, result);
+        
+        return result;
+        
+    }
+    
+    public void generateParenthesisHelp (int left, int right, char[] str, int index,
+        ArrayList<String> result) {
+        
+        if (left == 0 && right == 0) {
+            
+            String s = new String(str);
+            
+            result.add(s);
+            
+        } else if (right < left || left < 0) return; 
+        // two conditions to stop: not enough ')', left < 0
+        if (left > 0) {
+            
+            str[index] = '(';
+            
+            generateParenthesisHelp(left-1, right, str, index+1, result);
+            
+        }
+        
+        if (right > 0 && right > left) {
+            
+            str[index] = ')';
+            
+            generateParenthesisHelp(left, right-1, str, index+1, result);
+        }
+    }
+}
+
+
+--------------------------
+void printParenthese(char *buf, int pos, int left, int right) {
+  if (left == 0 && right == 0) {
+    printf("%s\n", buf);
+    count++;
+  }
+  
+  if (left > 0) {
+    buf[pos] = '(';
+    printParenthese(buf, pos + 1, left - 1, right);
+  }
+  if (right > left) {
+    buf[pos] = ')';
+    printParenthese(buf, pos + 1, left, right - 1);
+  }
+}

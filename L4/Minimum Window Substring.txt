@@ -1,0 +1,41 @@
+public class Solution {
+    public String minWindow(String S, String T) {
+        int[] needToFind = new int[256];
+        int[] hasFound = new int[256];
+         
+        for(int i = 0; i < T.length(); ++i) {
+            needToFind[T.charAt(i)]++;
+        }
+         
+        int count = 0;
+        int minWindowSize = Integer.MAX_VALUE;
+        int start = 0, end = 0;
+        String window = "";
+         
+        for(; end < S.length(); end++) {
+            if(needToFind[S.charAt(end)] == 0) continue;
+            char c = S.charAt(end);
+            hasFound[c]++;
+             
+            if(hasFound[c] <= needToFind[c]) {
+                count++;
+            }
+             
+            if(count == T.length()) {
+                while(needToFind[S.charAt(start)] == 0 ||
+                    hasFound[S.charAt(start)] > needToFind[S.charAt(start)]) {
+                    if(hasFound[S.charAt(start)] > needToFind[S.charAt(start)])
+                        hasFound[S.charAt(start)]--;
+                    start++;
+                }
+                 
+                if(end - start + 1 < minWindowSize) {
+                    minWindowSize = end - start + 1;
+                    window = S.substring(start, end + 1);
+                }
+            }
+        }
+         
+        return window;
+    }
+}

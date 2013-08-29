@@ -1,0 +1,48 @@
+http://zh.wikipedia.org/zh-cn/%E6%A0%BC%E9%9B%B7%E7%A0%81#.E4.BA.8C.E9.80.B2.E4.BD.8D.E6.95.B8.E8.BD.89.E6.A0.BC.E9.9B.B7.E7.A2.BC
+
+
+    public ArrayList<Integer> grayCode(int n)
+    {
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        al.add(0);
+
+        for (int i = 1; i <= n; i++)
+        {
+            int a = 1 << (i - 1);
+
+            for (int j = al.size() - 1; j >= 0; j--)
+            {
+                al.add(al.get(j) | a);
+            }
+        }
+        return al;
+    }
+
+
+http://www.mitbbs.com/article_t1/JobHunting/32128561_0_2.html
+
+-------------------
+用最高位翻转、其他位反序的办法
+http://www.mitbbs.com/article_t/JobHunting/32295763.html
+http://www.cnblogs.com/etcow/archive/2012/09/07/2674449.html
+
+
+
+
+
+----------------
+
+public class Solution {  
+public ArrayList<Integer> grayCode(int n) {  
+// Start typing your Java solution below  
+// DO NOT write main() function  
+ArrayList<Integer> res = new ArrayList<Integer>();  
+
+int sz = 1<<n;  
+for(int i=0; i<sz; i++) {  
+res.add( i^(i>>1) );  
+}  
+return res;  
+}  
+} 
+

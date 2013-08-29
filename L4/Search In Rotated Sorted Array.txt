@@ -1,0 +1,50 @@
+int rotated_binary_search(int A[], int N, int key) {
+    int L = 0;
+    int R = N - 1;
+
+    while (L <= R) {
+        // Avoid overflow, same as M=(L+R)/2
+        int M = L + ((R - L) / 2);
+        if (A[M] == key) return M;
+
+        // the bottom half is sorted
+        if (A[L] <= A[M]) {
+            if (A[L] <= key && key < A[M])
+                R = M - 1;
+            else
+                L = M + 1;
+        }
+        // the upper half is sorted
+        else {
+            if (A[M] < key && key <= A[R])
+                L = M + 1;
+            else 
+                R = M - 1;
+        }
+    }
+    return -1;
+}
+
+
+------------
+public class Solution {
+    public int search(int[] A, int target) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(A==null) return -1;
+        
+        int start=0,end=A.length-1;
+        
+        while(start<=end){
+        int mid=(start+end)/2;
+        
+        if(A[mid]==target) return mid;
+        else if(A[mid]>target &&(target>A[end]||A[mid]<A[end]) ||
+        A[mid]<target && A[mid]<A[end]&&target>A[end])
+        end=mid-1;
+        else 
+        start=mid+1;
+        }
+        return -1;
+    }
+}
