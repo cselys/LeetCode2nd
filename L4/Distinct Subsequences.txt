@@ -1,0 +1,84 @@
+DP: let F(i, j) denote the number of ways for S[0]¡­S[i] contain T[0]..T[j], Then F(n-1, m-1) is our answer and we have
+if(S[i] != T[j])  F(i, j) = F(i-1, j);
+if(S[i] == T[j]) F(i, j) = F(i-1, j-1) + F(i-1, j);
+
+
+public class Solution {
+    public int numDistinct(String S, String T) {
+        int m = S.length();
+        int n = T.length();
+        int[][] result = new int[m + 1][n + 1];
+        result[0][0] = 1;
+        for(int i = 1; i < m + 1; i++) {
+            for(int j = 0; j < n + 1; j++) {
+                result[i][j] = result[i - 1][j];
+                if(j > 0 && S.charAt(i - 1) == T.charAt(j - 1)) result[i][j] += result[i - 1][j - 1];
+            }
+        }
+        return result[m][n];
+    }
+}
+
+
+-------------------------------------
+public class Solution {
+    public int numDistinct(String S, String T) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        HashMap<Character,ArrayList<Integer>> map = new HashMap<Character,ArrayList<Integer>>();
+        for(int i=0;i<T.length();i++){
+            if(map.containsKey(T.charAt(i))){
+                map.get(T.charAt(i)).add(i);
+            }else{
+                ArrayList<Integer> temp = new ArrayList<Integer>();
+                temp.add(i);
+                map.put(T.charAt(i),temp);
+            }
+        }
+        
+        int[] res = new int[T.length()+1];
+        res[0]=1;
+        
+        for(int i=0;i<S.length();i++){
+            char c = S.charAt(i);
+            if(map.containsKey(c)){
+                ArrayList<Integer> temp = map.get(c);
+                int[] old = new int[temp.size()];
+                for(int j=0;j<temp.size();j++)
+                        old[j]=res[temp.get(j)];
+                for(int j=0;j<temp.size();j++)
+                        res[temp.get(j)+1]+=old[j];
+            }
+        }
+        return res[T.length()];
+    }
+}
+
+
+
+
+
+-----------------
+public class Solution {
+    public int numDistinct(String S, String T) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+          if(S.length() == 0)
+            return 0;
+        if(T.length() == 0)
+            return 1;
+           
+        if(S.length() == 1 && T.length() == 1){
+            if(S.charAt(0)== T.charAt(0)) return 1;
+            else return 0;
+        }
+       
+        if(S.charAt(0) != T.charAt(0)){
+            return numDistinct(S.substring(1), T);
+        }else{
+            return numDistinct(S.substring(1), T) + numDistinct(S.substring(1), T.
+substring(1));
+        }
+    }
+}
+
