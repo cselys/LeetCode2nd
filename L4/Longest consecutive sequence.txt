@@ -1,0 +1,73 @@
+public static int longestConsecutive(int[] num) {
+        Hashtable<Integer, Interval> ht = new Hashtable<Integer, Interval>();
+        int max = 0;
+       
+        for(int i = 0; i < num.length; i++)
+        {
+            int tmp = num[i];
+            if(!ht.containsKey(tmp))
+            {
+                int low = tmp;
+                int high = tmp;
+               
+                ht.put(tmp, new Interval(high, low));
+                if(ht.containsKey(tmp - 1))
+                {
+                    low = ht.get(tmp - 1).low;
+                }
+                if(ht.containsKey(tmp + 1))
+                {
+                    high = ht.get(tmp + 1).high;
+                }
+                           
+                //update only the high and the low
+                ht.get(low).high = high;
+                ht.get(high).low = low;
+               
+                max = Math.max((high - low + 1), max);
+            }
+        }
+       
+        return max;
+    }
+
+
+
+http://www.mitbbs.com/article_t0/JobHunting/32465791.html
+
+http://tech-wonderland.net/blog/leetcode-longest-consecutive-sequence-2.html
+
+
+
+public class Solution {
+    public int longestConsecutive(int[] num) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        
+        HashMap<Integer,Integer> start=new HashMap<Integer,Integer>();
+        HashMap<Integer,Integer> end=new HashMap<Integer,Integer>();
+        int range=0;
+        
+        for(int i=0;i<num.length;i++){
+            int current =num[i];
+            if(start.containsKey(current)) continue;
+            
+            start.put(current,1);
+            end.put(current,1);
+            
+            int left=current, right=current;
+            if(start.containsKey(current+1))
+            right=current+start.get(current+1);
+            
+            if(end.containsKey(current-1))
+            left=current-end.get(current-1);
+            
+            int temp=right-left+1;
+            
+            start.put(left,temp);
+            end.put(right,temp);
+            range=range>temp?range:temp;
+        }
+        return range;
+    }
+}

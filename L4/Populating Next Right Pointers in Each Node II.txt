@@ -39,3 +39,47 @@ http://www.kaixinwenda.com/article-violet_program-9310013.html
 http://www.cnblogs.com/feiling/archive/2013/08/19/3268836.html
 
 http://gongxuns.blogspot.com/2012/12/leetcodepopulating-next-right-pointers_12.html
+
+
+
+
+
+public class Solution {
+    public void connect(TreeLinkNode root) {
+		// Start typing your Java solution below
+		// DO NOT write main() function
+		TreeLinkNode cur_head = root;
+		while(cur_head != null){
+			TreeLinkNode cur = cur_head;
+			TreeLinkNode next_head = null;
+			TreeLinkNode last_node = null;
+			while(cur != null){
+				if(cur.left == null && cur.right == null);
+				else if(cur.left != null && cur.right != null){
+					if(last_node != null)
+						last_node.next = cur.left;
+					cur.left.next = cur.right;
+					last_node = cur.right;
+					if(next_head == null)
+						next_head = cur.left;
+				}
+				else{
+					TreeLinkNode child = null;
+					if(cur.left != null)
+						child = cur.left;
+					else
+						child = cur.right;
+					if(last_node != null)
+						last_node.next = child;
+					last_node = child;
+					if(next_head == null)
+						next_head = child;
+				}
+				cur = cur.next;
+			}
+			if(last_node != null)
+				last_node.next = null;
+			cur_head = next_head;
+		}
+	}
+}
