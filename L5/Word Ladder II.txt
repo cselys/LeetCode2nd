@@ -74,3 +74,12 @@ public class Solution {
         }
     }
 }
+
+
+
+
+http://standalone.iteye.com/blog/1847367
+
+
+http://tech-wonderland.net/blog/leetcode-word-ladder-ii.html
+

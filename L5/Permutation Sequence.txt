@@ -1,0 +1,103 @@
+
+http://tech-wonderland.net/blog/leetcode-permutation-sequence.html
+
+http://gongxuns.blogspot.com/2012/12/leetcode-permutation-sequence.html
+
+
+
+public class Solution {
+    public String getPermutation(int n, int k) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        boolean[] output = new boolean[n];
+        StringBuilder buf = new StringBuilder("");
+        int[] res = new int[n];
+        res[0]=1;
+        for(int i=1;i<n;i++)
+            res[i]=res[i-1]*i;
+        
+        for(int i=n-1;i>=0;i--){
+            int s=1;
+            while(k>res[i]){
+                s++;
+                k-=res[i];
+            }
+            for(int j=0;j<n;j++){
+                if(j+1<=s && output[j]){
+                    s++;
+                }
+            }
+            output[s-1]=true;
+            buf.append(Integer.toString(s));
+        }        
+        return buf.toString();
+    }
+}
+
+-----------------
+
+http://www.cnblogs.com/xishibean/archive/2013/02/14/2951314.html
+
+public class Solution {
+    public String getPermutation(int n, int k) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        if(k<0) return new String();
+        
+        k = k-1;
+        
+        LinkedList<Character> can = new LinkedList<Character>();
+        for(int i=0; i<n;i++) {
+            can.add( (char)(i+'1') );
+        }
+        
+        char[] res = new char[n];
+        int i=0;
+        int p=0;
+        
+        while(i<n) {
+            int f = getFactorial(n-i-1);
+            p = k/f;
+            res[i++] = can.get(p);
+            can.remove(p);
+            k = k % f; 
+        }
+        
+        return new String(res);
+    }
+    
+    private int getFactorial(int n) {
+        if(n==0) return 1;
+        int x = n;
+        while(--n>0) x *= n;
+        return x;
+    }
+}
+
+
+
+
+--------------
+public class Solution {    
+    public String getPermutation(int n, int k) {
+        StringBuilder sb = new StringBuilder();
+        for(int i=1; i<=n; i++) {sb.append(i);}
+        
+        StringBuilder ret = new StringBuilder();
+        
+        int[] factor = new int[n];
+        factor[0] = 1;
+        for(int i=1; i<n; i++) { factor[i] = factor[i-1] * i;}
+        
+        k--;    // note factorial number begins from 0 instead of 1
+        for(int i=n-1; i>0; i--){            
+            int code = k/factor[i];
+            k = k%factor[i];
+                        
+            ret.append(sb.charAt(code)); 
+            sb.deleteCharAt(code);            
+        }
+        
+        return ret.toString();
+    }
+}

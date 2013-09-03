@@ -1,0 +1,84 @@
+public class Solution {
+    public int largestRectangleArea(int[] height) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int[] left = new int[height.length];
+        int[] right = new int[height.length];
+        Stack<Integer> stack = new Stack<Integer>();
+         
+        for (int i = 0; i < height.length; i++) {
+            while (!stack.isEmpty() && height[stack.peek()] >= height[i])
+                stack.pop();                        
+            if (stack.isEmpty())
+                left[i] = 0;
+            else
+                left[i] = stack.peek() + 1;
+            stack.push(i);          
+        }       
+ 
+        while (!stack.isEmpty())
+            stack.pop();
+         
+        for (int i = height.length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && height[stack.peek()] >= height[i]) 
+                stack.pop();
+            if (stack.isEmpty())
+                right[i] = height.length - 1;
+            else
+                right[i] = stack.peek() - 1;        
+            stack.push(i);
+        }
+ 
+        int ans = 0;
+        for (int i = 0; i < height.length; i++)
+            ans = Math.max(height[i] * (right[i] - left[i] + 1), ans);
+ 
+        return ans;
+    }
+}
+
+
+http://wehackcode.wordpress.com/2012/11/26/largest-rectangle-in-histogram/
+------------------------------------
+http://tech-queries.blogspot.com/2011/03/maximum-area-rectangle-in-histogram.html
+
+
+http://tech-wonderland.net/blog/leetcode-largest-rectangle-in-histogram.html
+
+
+https://github.com/rffffffff007/leetcode/blob/master/Largest%20Rectangle%20in%20Histogram.java
+
+
+http://blog.csdn.net/abcbc/article/details/8943485
+
+
+
+public class Solution {
+    public int largestRectangleArea(int[] height) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        int n = height.length;
+        int stackTop = 0;
+        int[] hStack = new int[n];
+        int[] bStack = new int[n];
+        
+        int maxArea = 0;
+        for(int i = 0; i <= n; i++){
+            int bigItemsCount = 0;
+            while(stackTop > 0 &&(i == n || hStack[stackTop - 1] >= height[i])){
+                // pop the stack top to main the ascending order in hStack.
+                stackTop--;
+                int h = hStack[stackTop];
+                bigItemsCount += bStack[stackTop];
+                maxArea = Math.max(maxArea, h * bigItemsCount);
+            }
+            if(i < n){
+                // insert the new item to stack
+                hStack[stackTop] = height[i];
+                bStack[stackTop++] = bigItemsCount + 1;
+            }
+        }
+        
+        return maxArea;
+    }
+}

@@ -1,0 +1,151 @@
+http://tech-wonderland.net/blog/leetcode-wildcard-matching.html
+
+http://blog.csdn.net/abcbc/article/details/8868711
+
+http://gongxuns.blogspot.com/2013/01/leetcode-wildcard-matching.html
+
+http://blog.csdn.net/lbyxiafei/article/details/9416765
+
+http://blog.unieagle.net/2012/11/07/leetcode%E9%A2%98%E7%9B%AE%EF%BC%9Awildcard-matching/
+
+http://www.cnblogs.com/nanpo/p/3180967.html
+
+
+  public class Solution {
+     public boolean isMatch(String s, String p) {
+    // Start typing your Java solution below
+    // DO NOT write main() function
+    if (p.length() == 0) {
+      return s.length() == 0;
+    }
+
+    if (p.charAt(0) != '*') {
+      if (s.length() != 0 && (p.charAt(0) == s.charAt(0) || p.charAt(0) == '?')) {
+        return isMatch(s.substring(1), p.substring(1));
+      } else {
+        return false;
+      }
+    }
+
+    while (s.length() != 0) {
+      while (p.length() > 1 && p.charAt(1) == '*') {
+        p = p.substring(1);
+      }
+      if (isMatch(s, p.substring(1))) {
+        return true;
+      }
+      s = s.substring(1);
+    }
+
+    return isMatch(s, p.substring(1));
+  }
+
+}
+
+
+
+----------------------
+public class Solution {
+      public int stringMatch(String s, String p) {
+    int sLen = s.length();
+    int pLen = p.length();
+    int i = 0;
+    int j = 0;
+
+    for (; i < sLen && j < pLen; i++, j++) {
+      if (s.charAt(i) != p.charAt(j) && p.charAt(j) != '?') {
+        i = i - j;
+        j = -1;
+      }
+    }
+    if (j == pLen) {
+      return i - j;
+    } else {
+      return -1;
+    }
+  }
+
+  public boolean isMatch(String s, String p) {
+    // Start typing your Java solution below
+    // DO NOT write main() function
+    String matchStr = null;
+    int first = p.indexOf('*');
+
+    if (first == -1) {
+      // no '*' in the pattern
+      // s and p must exactly match
+      return stringMatch(s, p) == 0 && s.length() == p.length();
+    }
+
+    if (first > 0) {
+      // p does not begin with '*'
+      // check beginning part of p (before the first '*')
+      // forward match from the beginning characters of s and p
+      matchStr = p.substring(0, first);
+      int i = 0; int j = 0;
+      for (; i < s.length() && j < matchStr.length(); i++, j++) {
+        if (s.charAt(i) != matchStr.charAt(j) && matchStr.charAt(j) != '?') {
+          return false;          
+        }
+      }
+      if (j < matchStr.length()) {
+        return false;
+      }
+      // discard matched part in s after matching
+      s = s.substring(matchStr.length());
+    }
+    
+    int last = p.lastIndexOf('*');
+    if (last < p.length() - 1) {
+      // p does not end with '*'
+      // check last part of p (after the very last '*')
+      // backward match from the last characters of s and p
+      matchStr = p.substring(last + 1);
+      int i = s.length() - 1; int j = matchStr.length() - 1;
+      for (; i >= 0 && j >= 0; i--, j--) {
+        if (s.charAt(i) != matchStr.charAt(j) && matchStr.charAt(j) != '?') {
+          return false;          
+        }
+      }
+      if (j >= 0) {
+        return false;
+      }
+      // discard matched part in s after matching
+      s = s.substring(0, s.length() - matchStr.length());
+    }
+
+    // discard matched part in p
+    p = p.substring(first, last + 1);
+
+    // discard consecutive '*' from the front of p
+    while (p.length() != 0 && p.charAt(0) == '*') {
+      p = p.substring(1);
+    }
+    // discard consecutive '*' from the tail of p
+    while (p.length() != 0 && p.charAt(p.length() - 1) == '*') {
+      p = p.substring(0, p.length() - 1);
+    }
+
+    // iteratively match the rest part of p
+    while (p.length() != 0) {
+      int star = p.indexOf('*');
+      if (star != -1) {
+        matchStr = p.substring(0, star);
+      } else {
+        matchStr = p;
+      }
+      int match = stringMatch(s, matchStr);
+      if (match == -1) {
+        return false;
+      }
+      p = p.substring(matchStr.length());
+      while (p.length() != 0 && p.charAt(0) == '*') {
+        p = p.substring(1);
+      }
+      s = s.substring(match + matchStr.length());
+    }
+    
+    return true;
+  }
+
+}

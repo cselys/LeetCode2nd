@@ -40,6 +40,7 @@ public class Solution {
 http://www.cnblogs.com/feiling/p/3228736.html
 
 
+http://www.cnblogs.com/qsort/archive/2011/08/11/2134338.html
 
 
 

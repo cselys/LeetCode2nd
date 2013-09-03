@@ -1,0 +1,40 @@
+http://tech-wonderland.net/blog/leetcode-first-missing-positive.html
+
+http://blog.unieagle.net/2012/09/20/leetcode%E9%A2%98%E7%9B%AE%EF%BC%9Afirst-missing-positive/
+
+public class Solution {
+    public int firstMissingPositive(int[] A) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        
+        if(A==null || A.length==0) return 1;
+        int n=A.length;
+        
+        int i = 0;
+        while(i < n)
+        {
+            if (A[i] == i)
+                i++;
+            else
+            {
+                if (0 <= A[i] && A[i] < n && A[A[i]] != A[i])
+                {
+                    int t = A[i];
+                    A[i] = A[A[i]];
+                    A[t] = t;
+                    continue;
+                }
+//                else
+                    i++;
+            }
+        }
+        
+        for(i = 1; i < n; i++)
+            if (A[i] != i)
+                return i;
+        
+        return A[0] == n ? n + 1 : n;
+    }
+}
+
+
