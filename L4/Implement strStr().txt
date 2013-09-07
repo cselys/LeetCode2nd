@@ -22,3 +22,20 @@ public class Solution {
         return null;
     }
 }
+
+
+
+
+--------------------
+KMP
+
+
+http://blog.csdn.net/lin_bei/article/details/1252686
+
+
+
+http://billhoo.blog.51cto.com/2337751/411486
+
+http://blog.csdn.net/joylnwang/article/details/6778316
+
+http://www.matrix67.com/blog/archives/115/
