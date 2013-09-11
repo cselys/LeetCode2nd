@@ -28,7 +28,7 @@ public class Solution {
     boolean[][] buildTable2(String s){
         
         int n=s.length();
-        boolean[][] isPalindrom=new boolean[n][n];
+        
          boolean[][] map = new boolean[n][n];
         for(int i = 0; i < n; i++) {
             map[i][i] = true;
