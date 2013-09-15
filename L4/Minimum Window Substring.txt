@@ -39,3 +39,6 @@ public class Solution {
         return window;
     }
 }
+
+http://blog.unieagle.net/2012/10/16/leetcode%E9%A2%98%E7%9B%AE%EF%BC%9Aminimum-window-substring/
+

@@ -2,6 +2,34 @@ public class Solution {
     public String convert(String s, int nRows) {
         // Start typing your Java solution below
         // DO NOT write main() function
+        if(nRows <= 1) return s;
+        StringBuilder[] list = new StringBuilder[nRows];
+        for(int i = 0; i < nRows; i++) list[i] = new StringBuilder();
+        int row = 0;
+        int i = 0;
+        boolean down = true;
+        while(i < s.length()){
+            list[row].append(s.charAt(i));
+            if(row == 0) down = true;
+            if(row == nRows-1) down = false;
+            if(down) row++;
+            else row --;
+            i++;
+        }
+        StringBuilder res = new StringBuilder();
+        for(StringBuilder sb : list) res.append(sb.toString());
+        return res.toString();
+    }
+}
+
+http://codeluli.blogspot.com/2013/04/zigzag-conversion.html
+
+---------------
+
+public class Solution {
+    public String convert(String s, int nRows) {
+        // Start typing your Java solution below
+        // DO NOT write main() function
         if(s==null) return null;
         if(nRows<=1)return s;
         int sz=s.length();
@@ -30,3 +58,18 @@ public class Solution {
 
         
         
+
+
+ we need to scan from the left to right row by row, for the first and last row, the difference
+between every two is 2 * nRow – 2, and for the middle say i-th rows, the difference between every two is either 2 * nRow – 2 – 2 * i
+or 2 * i in turn. Following this, a linear scan of the original string could give us the final result string by pushing the corresponding character  at specific index into the final resulted string.
+
+http://tech-wonderland.net/blog/leetcode-zigzag-conversion.html
+
+
+先计算一下每一个zig包含的字符个数，实际上是zigSize = nRows + nRows – 2
+然后一行一行的加s中的特定元素就行。
+第一行和最后一行都只需要加一个字符，每一个zig，而且在s中的index间隔是zigSize。
+中间每一行需要添加两个字符到结果中去。第一个字符同上；第二个字符和前面添加这个字符在s上的inde相差正好是zigSize – 2*ir。ir是行index。
+
+http://blog.unieagle.net/2012/11/08/leetcode%E9%A2%98%E7%9B%AE%EF%BC%9Azigzag-conversion/
